@@ -1,0 +1,26 @@
+name: Setup production environment
+
+on:
+  pull_request:
+    branches:
+      - 'release'
+    types: [synchronize, closed]
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  run-prd:
+    runs-on: ubuntu-latest
+    env:
+      ENV: prd
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: echo
+        run: |
+          echo ${ENV}
+      - name: echo merged
+        if: github.event.pull_request.merged == true
+        run: |
+          echo ${ENV}
